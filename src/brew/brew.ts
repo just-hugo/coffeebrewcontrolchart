@@ -30,7 +30,25 @@ form.addEventListener("submit", (event) => {
   const tds = tdsInput.valueAsNumber;
   const mass = massInput.valueAsNumber;
 
-  extractionYield = (tds * mass) / dose;
+  //input validation
+  const valid =
+    Number.isFinite(dose) &&
+    dose > 0 &&
+    dose < 5000 &&
+    Number.isFinite(tds) &&
+    tds > 0 &&
+    tds <= 5 &&
+    Number.isFinite(mass) &&
+    mass > 0 &&
+    mass <= 5000;
 
-  result.textContent = extractionYield.toString();
+  if (valid) {
+    extractionYield = (tds * mass) / dose;
+
+    result.textContent = extractionYield.toString();
+  } else {
+    throw new Error(
+      "One of the inputs (tds, dose, mass) is not a valid number based on expected brew values",
+    );
+  }
 });
