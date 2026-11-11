@@ -1,4 +1,39 @@
+<!doctype html>
 <head>
   <link href="src/styles/style.css" rel="stylesheet" />
 </head>
-<p>Hello, world</p>
+<body>
+  <form>
+    <input
+      type="number"
+      id="tds"
+      min=".01"
+      max="5"
+      step=".01"
+      required
+      placeholder="Brew TDS"
+    />
+    <input
+      type="number"
+      id="mass"
+      min="1"
+      max="1000"
+      step=".01"
+      required
+      placeholder="Brew Mass (g)"
+    />
+    <input
+      type="number"
+      id="dose"
+      min="1"
+      max="50"
+      step=".01"
+      required
+      placeholder="Coffee Dose (g)"
+    />
+    <input type="submit" id="calculateBtn" value="Calculate Extraction Yield" />
+  </form>
+
+  <p id="result"></p>
+</body>
+<script src="src/brew/brew.ts"></script>
