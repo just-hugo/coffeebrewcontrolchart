@@ -11,16 +11,14 @@ const CHART_CONFIG = {
   },
   axes: {
     extractionYield: {
-      domain: [14, 26], 
-      interval: 1
+      domain: [14, 26],
+      interval: 1,
     },
     tds: {
       domain: [0.9, 1.8],
       interval: 0.1,
     },
   },
-  grid: {},
-  controlLimits: {},
 };
 
 const xAxisScale = d3
