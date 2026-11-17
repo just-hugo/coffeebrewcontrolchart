@@ -1,20 +1,48 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
-const width = 700;
-const height = 545;
-const marginTop = 40;
-const marginRight = 40;
-const marginBottom = 40;
-const marginLeft = 40;
+const CHART_CONFIG = {
+  dimensions: {
+    width: 700,
+    height: 545,
+    marginTop: 40,
+    marginBottom: 40,
+    marginLeft: 40,
+    marginRight: 40,
+  },
+  axes: {
+    extractionYield: {
+      domain: [14, 26],
+      interval: 1,
+    },
+    tds: {
+      domain: [0.9, 1.8],
+      interval: 0.1,
+    },
+  },
+};
+
 const xAxisScale = d3
   .scaleLinear()
-  .domain([14, 26])
-  .range([marginLeft, width - marginRight]);
+  .domain([
+    CHART_CONFIG.axes.extractionYield["domain"][0],
+    CHART_CONFIG.axes.extractionYield["domain"][1],
+  ])
+  .range([
+    CHART_CONFIG.dimensions["marginLeft"],
+    CHART_CONFIG.dimensions["width"] - CHART_CONFIG.dimensions["marginRight"],
+  ]);
 
 const yAxisScale = d3
   .scaleLinear()
-  .domain([0.9, 1.8])
-  .range([height - marginBottom, marginTop]);
+  .domain([
+    CHART_CONFIG.axes.tds["domain"][0],
+    CHART_CONFIG.axes.tds["domain"][1],
+  ])
+  .range([
+    CHART_CONFIG.dimensions["height"] - CHART_CONFIG.dimensions["marginBottom"],
+    CHART_CONFIG.dimensions["marginTop"],
+  ]);
+
 const [xMin, xMax] = xAxisScale.domain();
 const [yMin, yMax] = yAxisScale.domain();
 
@@ -69,11 +97,17 @@ function drawGridLines(
 const chart = d3
   .select("#chart-container")
   .append("svg")
-  .attr("width", width)
-  .attr("height", height);
+  .attr("width", CHART_CONFIG.dimensions["width"])
+  .attr("height", CHART_CONFIG.dimensions["height"]);
 
-const horizontalGridLineCoordinates = generateGridlineCoordinates(0.1, 0.9);
-const verticalGridLineCoordinates = generateGridlineCoordinates(1, 14);
+const horizontalGridLineCoordinates = generateGridlineCoordinates(
+  CHART_CONFIG.axes.tds.interval,
+  CHART_CONFIG.axes.tds.domain[0],
+);
+const verticalGridLineCoordinates = generateGridlineCoordinates(
+  CHART_CONFIG.axes.extractionYield.interval,
+  CHART_CONFIG.axes.extractionYield.domain[0],
+);
 
 drawGridLines(horizontalGridLineCoordinates, "y");
 drawGridLines(verticalGridLineCoordinates, "x");
@@ -81,24 +115,33 @@ drawGridLines(verticalGridLineCoordinates, "x");
 // Add the x-axis.
 chart
   .append("g")
-  .attr("transform", `translate(0,${height - marginBottom})`)
+  .attr(
+    "transform",
+    `translate(0,${CHART_CONFIG.dimensions["height"] - CHART_CONFIG.dimensions["marginBottom"]})`,
+  )
   .call(d3.axisBottom(xAxisScale));
 
 // Add the y-axis.
 chart
   .append("g")
-  .attr("transform", `translate(${marginLeft},0)`)
+  .attr("transform", `translate(${CHART_CONFIG.dimensions["marginLeft"]},0)`)
   .call(d3.axisLeft(yAxisScale));
 
-  // the x,y pair of coordinates corresponds to the placement of the upper left corner of a rectangle. The rest of the rectangle will be drawn to the right and down of this position based on its height and width
-function addBrewSection(x: number, y: number, width: number, height: number, className: string) {
-chart
-  .append("rect")
-  .attr("x", x)
-  .attr("y", y)
-  .attr("width", width)
-  .attr("height", height)
-  .attr("class", className);
+// the x,y pair of coordinates corresponds to the placement of the upper left corner of a rectangle. The rest of the rectangle will be drawn to the right and down of this position based on its height and width
+function addBrewSection(
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  className: string,
+) {
+  chart
+    .append("rect")
+    .attr("x", x)
+    .attr("y", y)
+    .attr("width", width)
+    .attr("height", height)
+    .attr("class", className);
 }
 
 addBrewSection(
@@ -106,14 +149,15 @@ addBrewSection(
   yAxisScale(1.8),
   xAxisScale(22) - xAxisScale(18),
   yAxisScale(1.45) - yAxisScale(1.8),
-"strong");
+  "strong",
+);
 
 addBrewSection(
   xAxisScale(18),
   yAxisScale(1.45),
   xAxisScale(22) - xAxisScale(18),
   yAxisScale(1.15) - yAxisScale(1.45),
-  "ideal"
+  "ideal",
 );
 
 addBrewSection(
@@ -121,7 +165,7 @@ addBrewSection(
   yAxisScale(1.15),
   xAxisScale(22) - xAxisScale(18),
   yAxisScale(0.9) - yAxisScale(1.15),
-  "weak"
+  "weak",
 );
 
 addBrewSection(
