@@ -1,3 +1,59 @@
 p {
-    color: red;
+  color: red;
+}
+.gridline {
+  stroke: grey;
+}
+
+.minor {
+  stroke-width: 0.25;
+}
+.major {
+  stroke-width: 1;
+  color: black;
+}
+.ideal {
+  color: red;
+  fill: red;
+  opacity: 25%;
+}
+.strong {
+  color: blue;
+  fill: blue;
+  opacity: 25%;
+}
+.weak {
+  color: yellow;
+  fill: yellow;
+  opacity: 25%;
+}
+.strong-overextracted {
+  color: pink;
+  fill: pink;
+  opacity: 25%;
+}
+.strong-underextracted {
+  color: green;
+  fill: green;
+  opacity: 25%;
+}
+.weak-overextracted {
+  color: orange;
+  fill: orange;
+  opacity: 25%;
+}
+.weak-underextracted {
+  color: brown;
+  fill: brown;
+  opacity: 25%;
+}
+.underextracted {
+  color: turquoise;
+  fill: turquoise;
+  opacity: 25%;
+}
+.overextracted {
+  color: grey;
+  fill: grey;
+  opacity: 25%;
 }
