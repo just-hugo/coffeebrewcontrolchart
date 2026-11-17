@@ -90,86 +90,84 @@ chart
   .attr("transform", `translate(${marginLeft},0)`)
   .call(d3.axisLeft(yAxisScale));
 
-  // strong section
+  // the x,y pair of coordinates corresponds to the placement of the upper left corner of a rectangle. The rest of the rectangle will be drawn to the right and down of this position based on its height and width
+function addBrewSection(x: number, y: number, width: number, height: number, className: string) {
 chart
   .append("rect")
-  .attr("x", xAxisScale(18))
-  .attr("y", yAxisScale(1.8))
-  .attr("width", xAxisScale(22) - xAxisScale(18))
-  .attr("height", yAxisScale(1.45) - yAxisScale(1.8))
-  .attr("class", "strong");
+  .attr("x", x)
+  .attr("y", y)
+  .attr("width", width)
+  .attr("height", height)
+  .attr("class", className);
+}
 
-// ideal brew section
-chart
-  .append("rect")
-  .attr("x", xAxisScale(18))
-  .attr("y", yAxisScale(1.45))
-  .attr("width", xAxisScale(22) - xAxisScale(18))
-  .attr("height", yAxisScale(1.15) - yAxisScale(1.45))
-  .attr("class", "ideal");
+addBrewSection(
+  xAxisScale(18),
+  yAxisScale(1.8),
+  xAxisScale(22) - xAxisScale(18),
+  yAxisScale(1.45) - yAxisScale(1.8),
+"strong");
 
-  // weak section
-chart
-  .append("rect")
-  .attr("x", xAxisScale(18))
-  .attr("y", yAxisScale(1.15))
-  .attr("width", xAxisScale(22) - xAxisScale(18))
-  .attr("height", yAxisScale(0.9) - yAxisScale(1.15))
-  .attr("class", "weak");
+addBrewSection(
+  xAxisScale(18),
+  yAxisScale(1.45),
+  xAxisScale(22) - xAxisScale(18),
+  yAxisScale(1.15) - yAxisScale(1.45),
+  "ideal"
+);
 
-  // Strong & Underextracted section
-chart
-  .append("rect")
-  .attr("x", xAxisScale(14))
-  .attr("y", yAxisScale(1.8))
-  .attr("width", xAxisScale(22) - xAxisScale(18))
-  .attr("height", yAxisScale(1.45) - yAxisScale(1.8))
-  .attr("class", "strong-underextracted");
+addBrewSection(
+  xAxisScale(18),
+  yAxisScale(1.15),
+  xAxisScale(22) - xAxisScale(18),
+  yAxisScale(0.9) - yAxisScale(1.15),
+  "weak"
+);
 
-  // Underextracted
-chart
-  .append("rect")
-  .attr("x", xAxisScale(14))
-  .attr("y", yAxisScale(1.45))
-  .attr("width", xAxisScale(22) - xAxisScale(18))
-  .attr("height", yAxisScale(1.15) - yAxisScale(1.45))
-  .attr("class", "underextracted");
+addBrewSection(
+  xAxisScale(14),
+  yAxisScale(1.8),
+  xAxisScale(22) - xAxisScale(18),
+  yAxisScale(1.45) - yAxisScale(1.8),
+  "strong-underextracted",
+);
 
-  // Weak and Underextracted
-chart
-  .append("rect")
-  .attr("x", xAxisScale(14))
-  .attr("y", yAxisScale(1.15))
-  .attr("width", xAxisScale(22) - xAxisScale(18))
-  .attr("height", yAxisScale(0.9) - yAxisScale(1.15))
-  .attr("class", "weak-underextracted");
+addBrewSection(
+  xAxisScale(14),
+  yAxisScale(1.45),
+  xAxisScale(22) - xAxisScale(18),
+  yAxisScale(1.15) - yAxisScale(1.45),
+  "underextracted",
+);
 
-// Strong and overextracted
-chart
-  .append("rect")
-  .attr("x", xAxisScale(22))
-  .attr("y", yAxisScale(1.8))
-  .attr("width", xAxisScale(22) - xAxisScale(18))
-  .attr("height", yAxisScale(1.45) - yAxisScale(1.8))
-  .attr("class", "strong-overextracted");
+addBrewSection(
+  xAxisScale(14),
+  yAxisScale(1.15),
+  xAxisScale(22) - xAxisScale(18),
+  yAxisScale(0.9) - yAxisScale(1.15),
+  "weak-underextracted",
+);
 
-// Overextracted
-chart
-  .append("rect")
-  .attr("x", xAxisScale(22))
-  .attr("y", yAxisScale(1.45))
-  .attr("width", xAxisScale(22) - xAxisScale(18))
-  .attr("height", yAxisScale(1.15) - yAxisScale(1.45))
-  .attr("class", "overextracted");
+addBrewSection(
+  xAxisScale(22),
+  yAxisScale(1.8),
+  xAxisScale(22) - xAxisScale(18),
+  yAxisScale(1.45) - yAxisScale(1.8),
+  "strong-overextracted",
+);
 
-// Weak and overextracted
-chart
-  .append("rect")
-  .attr("x", xAxisScale(22))
-  .attr("y", yAxisScale(1.15))
-  .attr("width", xAxisScale(22) - xAxisScale(18))
-  .attr("height", yAxisScale(0.9) - yAxisScale(1.15))
-  .attr("class", "weak-overextracted");
+addBrewSection(
+  xAxisScale(22),
+  yAxisScale(1.45),
+  xAxisScale(22) - xAxisScale(18),
+  yAxisScale(1.15) - yAxisScale(1.45),
+  "overextracted",
+);
 
-// Append the SVG element.
-chart.append(chart.node());
+addBrewSection(
+  xAxisScale(22),
+  yAxisScale(1.15),
+  xAxisScale(22) - xAxisScale(18),
+  yAxisScale(0.9) - yAxisScale(1.15),
+  "weak-overextracted",
+);
