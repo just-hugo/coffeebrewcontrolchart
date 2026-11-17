@@ -47,17 +47,19 @@ const [xMin, xMax] = xAxisScale.domain();
 const [yMin, yMax] = yAxisScale.domain();
 
 function generateGridlineCoordinates(
-  incrementValue: number,
-  initialValue: number,
+  interval: number,
+  min: number,
+  max: number,
 ) {
   var gridlineCoordinates = new Array();
   var i = 0;
 
-  for (var axis = 0; axis < 16; axis++) {
-    gridlineCoordinates.push(initialValue + i);
+  for (min; min < max; i++) {
+    gridlineCoordinates.push(min + interval);
 
-    i += incrementValue;
+    min += interval;
   }
+
   return gridlineCoordinates;
 }
 
@@ -103,12 +105,14 @@ const chart = d3
 const horizontalGridLineCoordinates = generateGridlineCoordinates(
   CHART_CONFIG.axes.tds.interval,
   CHART_CONFIG.axes.tds.domain[0],
+  CHART_CONFIG.axes.tds.domain[1],
 );
+
 const verticalGridLineCoordinates = generateGridlineCoordinates(
   CHART_CONFIG.axes.extractionYield.interval,
   CHART_CONFIG.axes.extractionYield.domain[0],
+  CHART_CONFIG.axes.extractionYield.domain[1],
 );
-
 drawGridLines(horizontalGridLineCoordinates, "y");
 drawGridLines(verticalGridLineCoordinates, "x");
 
