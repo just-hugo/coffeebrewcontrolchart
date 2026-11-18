@@ -21,6 +21,90 @@ const CHART_CONFIG = {
   },
 };
 
+type BrewRegion = {
+  name: string;
+  xMin: number;
+  xMax: number;
+  yMin: number;
+  yMax: number;
+  className: string;
+};
+
+const BREW_REGIONS: BrewRegion[] = [
+  {
+    name: "Ideal",
+    xMin: 18,
+    xMax: 22,
+    yMin: 1.15,
+    yMax: 1.45,
+    className: "ideal",
+  },
+  {
+    name: "Strong",
+    xMin: 18,
+    xMax: 22,
+    yMin: 1.8,
+    yMax: 1.45,
+    className: "strong",
+  },
+  {
+    name: "Weak",
+    xMin: 18,
+    xMax: 22,
+    yMin: 0.9,
+    yMax: 1.15,
+    className: "weak",
+  },
+  {
+    name: "Underextracted",
+    xMin: 14,
+    xMax: 18,
+    yMin: 1.15,
+    yMax: 1.45,
+    className: "underextracted",
+  },
+  {
+    name: "Overextracted",
+    xMin: 22,
+    xMax: 26,
+    yMin: 1.15,
+    yMax: 1.45,
+    className: "overextracted",
+  },
+  {
+    name: "StrongUnderextracted",
+    xMin: 14,
+    xMax: 18,
+    yMin: 1.45,
+    yMax: 1.8,
+    className: "strong-underextracted",
+  },
+  {
+    name: "WeakUnderextracted",
+    xMin: 14,
+    xMax: 18,
+    yMin: 0.9,
+    yMax: 1.15,
+    className: "weak-underextracted",
+  },
+  {
+    name: "StrongOverextracted",
+    xMin: 22,
+    xMax: 26,
+    yMin: 1.45,
+    yMax: 1.8,
+    className: "strong-overextracted",
+  },
+  {
+    name: "WeakOverextracted",
+    xMin: 22,
+    xMax: 26,
+    yMin: 0.9,
+    yMax: 1.45,
+    className: "weak-overextracted",
+  },
+];
+
 const xAxisScale = d3
   .scaleLinear()
   .domain([
