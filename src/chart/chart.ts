@@ -43,8 +43,8 @@ const BREW_REGIONS: BrewRegion[] = [
     name: "Strong",
     xMin: 18,
     xMax: 22,
-    yMin: 1.8,
-    yMax: 1.45,
+    yMin: 1.45,
+    yMax: 1.8,
     className: "strong",
   },
   {
@@ -216,90 +216,15 @@ chart
   .call(d3.axisLeft(yAxisScale));
 
 // the x,y pair of coordinates corresponds to the placement of the upper left corner of a rectangle. The rest of the rectangle will be drawn to the right and down of this position based on its height and width
-function addBrewSection(
-  x: number,
-  y: number,
-  width: number,
-  height: number,
-  className: string,
-) {
+function addBrewSection({ xMin, xMax, yMin, yMax, className }: BrewRegion) {
+
   chart
     .append("rect")
-    .attr("x", x)
-    .attr("y", y)
-    .attr("width", width)
-    .attr("height", height)
+    .attr("x", xAxisScale(xMin))
+    .attr("y", yAxisScale(yMax))
+    .attr("width", xAxisScale(xMax) - xAxisScale(xMin))
+    .attr("height", yAxisScale(yMin) - yAxisScale(yMax))
     .attr("class", className);
 }
 
-addBrewSection(
-  xAxisScale(18),
-  yAxisScale(1.8),
-  xAxisScale(22) - xAxisScale(18),
-  yAxisScale(1.45) - yAxisScale(1.8),
-  "strong",
-);
-
-addBrewSection(
-  xAxisScale(18),
-  yAxisScale(1.45),
-  xAxisScale(22) - xAxisScale(18),
-  yAxisScale(1.15) - yAxisScale(1.45),
-  "ideal",
-);
-
-addBrewSection(
-  xAxisScale(18),
-  yAxisScale(1.15),
-  xAxisScale(22) - xAxisScale(18),
-  yAxisScale(0.9) - yAxisScale(1.15),
-  "weak",
-);
-
-addBrewSection(
-  xAxisScale(14),
-  yAxisScale(1.8),
-  xAxisScale(22) - xAxisScale(18),
-  yAxisScale(1.45) - yAxisScale(1.8),
-  "strong-underextracted",
-);
-
-addBrewSection(
-  xAxisScale(14),
-  yAxisScale(1.45),
-  xAxisScale(22) - xAxisScale(18),
-  yAxisScale(1.15) - yAxisScale(1.45),
-  "underextracted",
-);
-
-addBrewSection(
-  xAxisScale(14),
-  yAxisScale(1.15),
-  xAxisScale(22) - xAxisScale(18),
-  yAxisScale(0.9) - yAxisScale(1.15),
-  "weak-underextracted",
-);
-
-addBrewSection(
-  xAxisScale(22),
-  yAxisScale(1.8),
-  xAxisScale(22) - xAxisScale(18),
-  yAxisScale(1.45) - yAxisScale(1.8),
-  "strong-overextracted",
-);
-
-addBrewSection(
-  xAxisScale(22),
-  yAxisScale(1.45),
-  xAxisScale(22) - xAxisScale(18),
-  yAxisScale(1.15) - yAxisScale(1.45),
-  "overextracted",
-);
-
-addBrewSection(
-  xAxisScale(22),
-  yAxisScale(1.15),
-  xAxisScale(22) - xAxisScale(18),
-  yAxisScale(0.9) - yAxisScale(1.15),
-  "weak-overextracted",
-);
+BREW_REGIONS.forEach(addBrewSection)
