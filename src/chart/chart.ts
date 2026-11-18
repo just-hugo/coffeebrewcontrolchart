@@ -21,6 +21,15 @@ const CHART_CONFIG = {
   },
 };
 
+type BrewRegion = {
+  name: string;
+  xMin: number;
+  xMax: number;
+  yMin: number;
+  yMax: number;
+  className: string;
+};
+
 const xAxisScale = d3
   .scaleLinear()
   .domain([
