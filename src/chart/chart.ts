@@ -200,18 +200,18 @@ const verticalGridLineCoordinates = generateGridlineCoordinates(
 drawGridLines(horizontalGridLineCoordinates, "y");
 drawGridLines(verticalGridLineCoordinates, "x");
 
-// Add the x-axis.
+// Add the x- and y- axes
 chart
-  .append("g")
+  .append("g").attr("id", "x-axis")
   .attr(
     "transform",
     `translate(0,${CHART_CONFIG.dimensions["height"] - CHART_CONFIG.dimensions["marginBottom"]})`,
   )
   .call(d3.axisBottom(xAxisScale));
 
-// Add the y-axis.
 chart
   .append("g")
+  .attr("id", "y-axis")
   .attr("transform", `translate(${CHART_CONFIG.dimensions["marginLeft"]},0)`)
   .call(d3.axisLeft(yAxisScale));
 
