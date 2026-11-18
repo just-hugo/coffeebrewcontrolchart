@@ -147,6 +147,29 @@ function generateGridlineCoordinates(
   return gridlineCoordinates;
 }
 
+const chart = d3
+  .select("#chart-container")
+  .append("svg")
+  .attr("width", CHART_CONFIG.dimensions["width"])
+  .attr("height", CHART_CONFIG.dimensions["height"]);
+
+const regions = chart.append("g").attr("id", "brew-regions")
+
+const grid = chart.append("g").attr("id", "grid");
+
+// the x,y pair of coordinates corresponds to the placement of the upper left corner of a rectangle. The rest of the rectangle will be drawn to the right and down of this position based on its height and width
+function addBrewSection({ xMin, xMax, yMin, yMax, className }: BrewRegion) {
+  regions
+    .append("rect")
+    .attr("x", xAxisScale(xMin))
+    .attr("y", yAxisScale(yMax))
+    .attr("width", xAxisScale(xMax) - xAxisScale(xMin))
+    .attr("height", yAxisScale(yMin) - yAxisScale(yMax))
+    .attr("class", className);
+}
+
+BREW_REGIONS.forEach(addBrewSection);
+
 function drawGridLines(
   coordinates: number[],
   referenceAxis: "x" | "y",
@@ -170,7 +193,7 @@ function drawGridLines(
       y2 = coordinate;
     }
 
-    chart
+    grid
       .append("line")
       .attr("x1", xAxisScale(x1))
       .attr("x2", xAxisScale(x2))
@@ -179,12 +202,6 @@ function drawGridLines(
       .attr("class", `gridline ${className}`);
   }
 }
-
-const chart = d3
-  .select("#chart-container")
-  .append("svg")
-  .attr("width", CHART_CONFIG.dimensions["width"])
-  .attr("height", CHART_CONFIG.dimensions["height"]);
 
 const horizontalGridLineCoordinates = generateGridlineCoordinates(
   CHART_CONFIG.axes.tds.interval,
@@ -202,7 +219,8 @@ drawGridLines(verticalGridLineCoordinates, "x");
 
 // Add the x- and y- axes
 chart
-  .append("g").attr("id", "x-axis")
+  .append("g")
+  .attr("id", "x-axis")
   .attr(
     "transform",
     `translate(0,${CHART_CONFIG.dimensions["height"] - CHART_CONFIG.dimensions["marginBottom"]})`,
@@ -214,17 +232,3 @@ chart
   .attr("id", "y-axis")
   .attr("transform", `translate(${CHART_CONFIG.dimensions["marginLeft"]},0)`)
   .call(d3.axisLeft(yAxisScale));
-
-// the x,y pair of coordinates corresponds to the placement of the upper left corner of a rectangle. The rest of the rectangle will be drawn to the right and down of this position based on its height and width
-function addBrewSection({ xMin, xMax, yMin, yMax, className }: BrewRegion) {
-
-  chart
-    .append("rect")
-    .attr("x", xAxisScale(xMin))
-    .attr("y", yAxisScale(yMax))
-    .attr("width", xAxisScale(xMax) - xAxisScale(xMin))
-    .attr("height", yAxisScale(yMin) - yAxisScale(yMax))
-    .attr("class", className);
-}
-
-BREW_REGIONS.forEach(addBrewSection)
